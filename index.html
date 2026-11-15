@@ -437,7 +437,7 @@
   .opt.wrong   { background: rgba(var(--bad-rgb),0.1);   border-color: rgba(var(--bad-rgb),0.35); }
   .opt.wrong   .opt-letter { background: var(--wrong);   border-color: var(--wrong);   color: #fff; }
 
-  /* No Answer option — muted/neutral style */
+  /* No Answer option - muted/neutral style */
   .opt.no-answer-opt {
     border-style: dashed;
     border-color: rgba(var(--muted2-rgb),0.3);
@@ -547,7 +547,7 @@
     margin-bottom: 12px;
   }
 
-  /* Bubble grid — 4 columns, fills top-to-bottom then left-to-right */
+  /* Bubble grid - 4 columns, fills top-to-bottom then left-to-right */
   .bubble-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -743,7 +743,7 @@
   .review-qnum { font-size: 11px; font-weight: 600; color: var(--wrong); letter-spacing: 0; text-transform: none; margin-bottom: 12px; }
   .review-qtext { white-space: pre-line; font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif; font-size: 1.25rem; line-height: 1.45; color: var(--text); }
 
-  /* Review options — same base as .opt but non-interactive */
+  /* Review options - same base as .opt but non-interactive */
   .review-opt {
     display: flex; align-items: center; gap: 14px;
     border-radius: var(--radius); padding: 14px 18px; margin-bottom: 10px;
@@ -859,11 +859,11 @@
     .history-section { margin-top: 24px; }
     .history-row   { flex-wrap: wrap; gap: 6px; padding: 10px 12px; }
 
-    /* Quiz layout — hide sidebar, go single column */
+    /* Quiz layout - hide sidebar, go single column */
     .quiz-layout   { flex-direction: column; gap: 0; }
     .q-sidebar     { display: none; }
 
-    /* Quiz header — stack timer below progress */
+    /* Quiz header - stack timer below progress */
     .quiz-header   { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 16px; }
     .progress-wrap { margin-right: 0; }
     .timer-display { justify-content: center; border-radius: var(--radius); }
@@ -1160,7 +1160,7 @@
     </div>
 
     <div class="review-card">
-      <div style="display:flex;align-items:center;margin-bottom:12px;"><div class="review-qnum" id="review-qnum" style="margin-bottom:0">Question 1</div><span class="time-badge" id="review-time-badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span id="review-time-val">—</span></span></div>
+      <div style="display:flex;align-items:center;margin-bottom:12px;"><div class="review-qnum" id="review-qnum" style="margin-bottom:0">Question 1</div><span class="time-badge" id="review-time-badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span id="review-time-val">0s</span></span></div>
       <div class="review-qtext" id="review-qtext"></div>
     </div>
 
@@ -1242,7 +1242,7 @@ const QUESTIONS = [
 const EXAM_SIZE = 50;
 const ALL_QUESTIONS = QUESTIONS;   // used by save/resume (index lookups)
 
-// Index 4 = "No Answer" — the default selection for every question
+// Index 4 = "No Answer" - the default selection for every question
 const NO_ANSWER_IDX = 4;
 
 // activeQuestions holds the shuffled order for each attempt
@@ -1396,7 +1396,7 @@ function renderQuestion() {
     grid.appendChild(btn);
   });
 
-  // Render the 5th option: "No Answer" — always present, selected by default
+  // Render the 5th option: "No Answer" - always present, selected by default
   const noAnsBtn = document.createElement('button');
   noAnsBtn.className = 'opt no-answer-opt' + (answers[current] === NO_ANSWER_IDX ? ' selected' : '');
   noAnsBtn.innerHTML = `<span class="opt-letter">E</span>No Answer`;
@@ -1546,7 +1546,7 @@ function renderReview() {
   document.getElementById('review-qnum').textContent  = `Question ${qi + 1}`;
   document.getElementById('review-qtext').textContent = q.q;
   const tv = document.getElementById('review-time-val');
-  if (tv) tv.textContent = timePerQ[qi] > 0 ? fmtTime(timePerQ[qi]) : '—';
+  if (tv) tv.textContent = timePerQ[qi] > 0 ? fmtTime(timePerQ[qi]) : '0s';
   document.getElementById('review-counter').textContent =
     `${reviewIdx + 1} / ${reviewQueue.length} failed`;
 
@@ -1674,7 +1674,7 @@ function showResults() {
   } else {
     document.getElementById('results-subtitle').textContent = passed
       ? `You scored ${finalPct}%, above the 80% pass mark.`
-      : `You scored ${finalPct}%, the pass mark is 80%. Give it another try.`;
+      : `You scored ${finalPct}%. The pass mark is 80%, so give it another try.`;
   }
 
   setTimeout(() => {
@@ -1722,7 +1722,7 @@ function renderHistory() {
         <span class="history-time">⏱ ${dur}</span>
         ${tabs}
         ${penaltyTag}
-        <span class="history-pct ${h.passed ? 'pass' : 'fail'}">${pct}% — ${h.passed ? 'Pass' : 'Fail'}</span>
+        <span class="history-pct ${h.passed ? 'pass' : 'fail'}">${pct}% ${h.passed ? 'Pass' : 'Fail'}</span>
       </div>`;
     }).join('');
     el.innerHTML =
@@ -1779,7 +1779,7 @@ function showTimeBreakdown() {
   document.getElementById('breakdown-stats').innerHTML = `
     <div class="bstat"><div class="bstat-val">${fmtTime(total)}</div><div class="bstat-lbl">Total time</div></div>
     <div class="bstat"><div class="bstat-val">${fmtTime(avg)}</div><div class="bstat-lbl">Avg per question</div></div>
-    <div class="bstat"><div class="bstat-val">${maxT > 0 ? 'Q' + (slowestIdx + 1) : '—'}</div><div class="bstat-lbl">Slowest question</div></div>
+    <div class="bstat"><div class="bstat-val">${maxT > 0 ? 'Q' + (slowestIdx + 1) : 'n/a'}</div><div class="bstat-lbl">Slowest question</div></div>
   `;
 
   // Question rows
@@ -1791,7 +1791,7 @@ function showTimeBreakdown() {
     const correct   = userAns === q.correct;
     const noAns     = userAns === NO_ANSWER_IDX;
     const dotCls    = correct ? 'correct' : noAns ? 'no-ans' : 'wrong';
-    const timeStr   = timePerQ[i] > 0 ? fmtTime(timePerQ[i]) : '—';
+    const timeStr   = timePerQ[i] > 0 ? fmtTime(timePerQ[i]) : '0s';
     // Truncate question text to ~60 chars for preview
     const preview   = q.q.replace(/\n/g, ' ').substring(0, 72) + (q.q.length > 72 ? '…' : '');
 
@@ -1799,7 +1799,7 @@ function showTimeBreakdown() {
     row.className = 'bd-row';
     row.id = 'bdrow-' + i;
 
-    // Build answer options — show all 4, highlight correct + user's choice
+    // Build answer options - show all 4, highlight correct + user's choice
     const map = shuffleMaps[i] || [0,1,2,3];
     const optsHtml = map.map((origIdx, displayPos) => {
       const isCorrect = origIdx === q.correct;
@@ -1947,7 +1947,7 @@ function toggleTheme() {
 
 // ── INIT ON LOAD ──
 (function init() {
-  // Restore theme preference — default is light (Parchment & Mahogany)
+  // Restore theme preference - default is light (Parchment & Mahogany)
   try {
     const saved = localStorage.getItem('reTheme') || 'light';
     applyTheme(saved);
