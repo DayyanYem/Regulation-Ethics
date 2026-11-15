@@ -1634,7 +1634,7 @@ function showResults() {
         <div class="tab-result-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div>
           <div class="tab-result-label">Tab switch detection</div>
-          <div class="tab-result-val">No tab switches, clean attempt</div>
+          <div class="tab-result-val">No tab switches — clean attempt</div>
         </div>
       </div>`;
   } else {
@@ -1673,8 +1673,8 @@ function showResults() {
       `Raw score: ${rawPct}%, Tab penalty: −${penalty}% (${tabSwitchCount} switch${tabSwitchCount > 1 ? 'es' : ''}), Final: ${finalPct}%`;
   } else {
     document.getElementById('results-subtitle').textContent = passed
-      ? `You scored ${finalPct}% above the 80% pass mark.`
-      : `You scored ${finalPct}% the pass mark is 80%. Give it another try.`;
+      ? `You scored ${finalPct}% — above the 80% pass mark.`
+      : `You scored ${finalPct}% — the pass mark is 80%. Give it another try.`;
   }
 
   setTimeout(() => {
