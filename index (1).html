@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulation and Ethics Practice Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink-rgb: 43,31,45; --accent-rgb: 122,59,105; --ok-rgb: 62,123,82; --bad-rgb: 180,35,24;
+    --muted2-rgb: 133,122,136; --bg-rgb: 244,239,245;
+    --gold: #7A3B69; --gold-light: #632D54; --gold-dim: rgba(122,59,105,0.10);
+    --navy: #F4EFF5; --navy-mid: #FCF9FC; --navy-surface: #FCF9FC; --navy-card: #EBE1EC;
+    --text: #2B1F2D; --text-muted: #6E5C70; --text-dim: #7F6D81;
+    --correct: #3E7B52; --wrong: #B42318; --no-ans: #857A88;
+    --radius: 16px; --radius-sm: 10px;
+    --transition: 0.2s ease;
+  }
+  [data-theme="dark"] {
+    --ink-rgb: 240,231,242; --accent-rgb: 208,148,193; --ok-rgb: 124,192,142; --bad-rgb: 240,128,120;
+    --muted2-rgb: 164,148,168; --bg-rgb: 29,22,32;
+    --gold: #D094C1; --gold-light: #DCA8CF; --gold-dim: rgba(208,148,193,0.14);
+    --navy: #1D1620; --navy-mid: #281F2B; --navy-surface: #281F2B; --navy-card: #34293A;
+    --text: #F2EAF3; --text-muted: #BDAEC0; --text-dim: #8F8093;
+    --correct: #7CC08E; --wrong: #F08078; --no-ans: #A394A6;
+  }
+
+  body {
+    font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px;
+      }
+
+  .shell {
+    width: 100%;
+    max-width: 980px;
+  }
+
+  /* ── HEADER BAR ── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-icon {
+    width: 36px; height: 36px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(var(--accent-rgb),0.3);
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .brand-name { font-size: 13px; font-weight: 500; color: var(--text-muted); letter-spacing: 0; text-transform: none; }
+  .tag {
+    font-size: 11px; font-weight: 500;
+    color: var(--gold);
+    background: var(--gold-dim);
+    border: 1px solid rgba(var(--accent-rgb),0.25);
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── START SCREEN ── */
+  .start-hero { text-align: center; padding: 20px 0 36px; }
+  .start-hero h1 {
+    font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .start-hero h1 em { font-style: italic; color: var(--gold); }
+  .start-hero p {
+    font-size: 15px; color: var(--text-muted);
+    max-width: 420px; margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+  .meta-pills {
+    display: flex; gap: 10px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 40px;
+  }
+  .pill {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 500; color: var(--text-muted);
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    padding: 7px 14px; border-radius: 30px;
+  }
+  .pill svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; }
+  .pill-pass { color: var(--correct); border-color: rgba(var(--ok-rgb),0.25); background: rgba(var(--ok-rgb),0.08); }
+  .pill-pass svg { stroke: var(--correct); }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
+    font-size: 15px; font-weight: 600;
+    padding: 14px 36px;
+    border: none; border-radius: var(--radius);
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+    letter-spacing: 0;
+  }
+  .btn-primary:hover { background: var(--gold-light);  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary svg { width: 16px; height: 16px; stroke: var(--navy); fill: none; stroke-width: 2.5; stroke-linecap: round; }
+
+
+  /* ── HISTORY ── */
+  .history-section {
+    margin-top: 36px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .history-heading {
+    font-size: 11px; font-weight: 600; letter-spacing: 0;
+    text-transform: none; color: var(--text-dim);
+    margin-bottom: 12px; text-align: center;
+  }
+  .history-row {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    border-radius: var(--radius);
+    padding: 12px 16px; margin-bottom: 8px; font-size: 13px;
+  }
+  .history-num  { color: var(--text-dim); flex-shrink: 0; font-size: 11px; font-weight: 600; min-width: 22px; }
+  .history-date { color: var(--text-dim); flex-shrink: 0; font-size: 12px; }
+  .history-score{ font-weight: 600; color: var(--text); flex: 1; text-align: center; }
+  .history-time { color: var(--text-muted); font-size: 12px; flex-shrink: 0; }
+  .history-pct  { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; }
+  .history-pct.pass { background: rgba(var(--ok-rgb),0.12); color: var(--correct); border: 1px solid rgba(var(--ok-rgb),0.25); }
+  .history-pct.fail { background: rgba(var(--bad-rgb),0.1);  color: var(--wrong);   border: 1px solid rgba(var(--bad-rgb),0.2); }
+  .history-penalty  { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; flex-shrink: 0; background: rgba(var(--bad-rgb),0.08); color: var(--wrong); border: 1px solid rgba(var(--bad-rgb),0.2); }
+  .history-empty{ text-align: center; color: var(--text-dim); font-size: 13px; padding: 20px 0; }
+  .history-tab-clean  { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; background: rgba(var(--ok-rgb),0.1); color: var(--correct); border: 1px solid rgba(var(--ok-rgb),0.2); }
+  .history-tab-flagged{ font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; background: rgba(var(--bad-rgb),0.08); color: var(--wrong); border: 1px solid rgba(var(--bad-rgb),0.18); }
+
+  .clear-history-link {
+    font-size: 12px; color: var(--text-dim); cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+    transition: color var(--transition);
+  }
+  .clear-history-link:hover { color: var(--wrong); }
+
+  /* ── PASSWORD MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(var(--bg-rgb),0.85);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--navy-mid);
+    border: 1px solid rgba(var(--ink-rgb),0.18);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    width: 100%; max-width: 360px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    text-align: center;
+  }
+  .modal-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(var(--bad-rgb),0.1);
+    border: 1px solid rgba(var(--bad-rgb),0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .modal-icon svg { width: 22px; height: 22px; stroke: var(--wrong); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .modal-title { font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif; font-size: 1.3rem; margin-bottom: 8px; }
+  .modal-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+  .modal-input {
+    width: 100%;
+    background: var(--navy-card);
+    border: 1px solid rgba(var(--ink-rgb),0.2);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
+    font-size: 15px; font-weight: 500;
+    padding: 11px 14px; text-align: center;
+    outline: none; letter-spacing: 0;
+    transition: border-color var(--transition);
+    margin-bottom: 8px;
+  }
+  .modal-input:focus { border-color: rgba(var(--accent-rgb),0.5); }
+  .modal-error {
+    font-size: 12px; color: var(--wrong);
+    margin-bottom: 16px; display: none;
+  }
+  .modal-actions { display: flex; gap: 10px; margin-top: 8px; }
+  .modal-actions .btn-ghost { flex: 1; justify-content: center; }
+  .modal-actions .btn-danger {
+    flex: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(var(--bad-rgb),0.15);
+    color: var(--wrong);
+    font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
+    font-size: 14px; font-weight: 600;
+    padding: 11px 20px;
+    border: 1px solid rgba(var(--bad-rgb),0.35); border-radius: var(--radius);
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .modal-actions .btn-danger:hover { background: rgba(var(--bad-rgb),0.25); border-color: rgba(var(--bad-rgb),0.5); }
+
+  /* ── TIME BADGE (review screen) ── */
+  .time-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; color: var(--text-muted);
+    background: var(--navy-card);
+    border: 1px solid rgba(var(--ink-rgb),0.16);
+    padding: 3px 10px; border-radius: 20px;
+    margin-left: 10px; letter-spacing: 0;
+  }
+  .time-badge svg { width: 11px; height: 11px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; }
+
+
+  /* ── TIME BREAKDOWN SCREEN ── */
+  .breakdown-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .breakdown-title {
+    font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif;
+    font-size: 1.4rem; color: var(--text);
+  }
+
+  .breakdown-stats {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;
+  }
+  .bstat {
+    flex: 1; min-width: 120px;
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .bstat-val  { font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif; font-size: 1.4rem; color: var(--text); }
+  .bstat-lbl  { font-size: 11px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--text-dim); margin-top: 4px; }
+
+  .breakdown-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .bd-row {
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color var(--transition);
+  }
+  .bd-row:hover { border-color: rgba(var(--accent-rgb),0.3); }
+  .bd-row.open  { border-color: rgba(var(--accent-rgb),0.35); }
+
+  .bd-summary {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 18px;
+  }
+  .bd-qnum {
+    font-size: 11px; font-weight: 700; letter-spacing: 0;
+    color: var(--text-dim); flex-shrink: 0; min-width: 30px;
+  }
+  .bd-preview {
+    flex: 1; font-size: 13px; color: var(--text-muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bd-time {
+    font-size: 12px; font-weight: 600; color: var(--text-muted);
+    flex-shrink: 0; min-width: 48px; text-align: right;
+  }
+  .bd-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .bd-dot.correct { background: var(--correct); }
+  .bd-dot.wrong   { background: var(--wrong); }
+  .bd-dot.no-ans  { background: var(--no-ans); }
+  .bd-chevron {
+    flex-shrink: 0; width: 16px; height: 16px;
+    stroke: var(--text-dim); fill: none; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+    transition: transform var(--transition);
+  }
+  .bd-row.open .bd-chevron { transform: rotate(180deg); }
+
+  .bd-detail {
+    display: none;
+    padding: 0 18px 18px;
+    border-top: 1px solid rgba(var(--ink-rgb),0.10);
+  }
+  .bd-row.open .bd-detail { display: block; }
+
+  .bd-qtext {
+    font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif;
+    font-size: 1.05rem; line-height: 1.5;
+    color: var(--text); margin: 14px 0 14px;
+    white-space: pre-line;
+  }
+  .bd-opts { display: flex; flex-direction: column; gap: 8px; }
+  .bd-opt {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; border-radius: var(--radius-sm);
+    font-size: 13px; border: 1px solid transparent;
+  }
+  .bd-opt.neutral  { background: var(--navy-card); border-color: rgba(var(--ink-rgb),0.10); color: var(--text-muted); }
+  .bd-opt.correct  { background: rgba(var(--ok-rgb),0.1); border-color: rgba(var(--ok-rgb),0.35); color: var(--text); }
+  .bd-opt.wrong    { background: rgba(var(--bad-rgb),0.08); border-color: rgba(var(--bad-rgb),0.3);  color: var(--text); }
+  .bd-opt .opt-letter {
+    width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    background: rgba(var(--ink-rgb),0.10); border: 1px solid rgba(var(--ink-rgb),0.18);
+    color: var(--text-muted);
+  }
+  .bd-opt.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: #fff; }
+  .bd-opt.wrong   .opt-letter { background: var(--wrong);   border-color: var(--wrong);   color: #fff; }
+  .bd-opt-tag {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 10px; font-weight: 700; letter-spacing: 0; text-transform: none;
+    padding: 2px 8px; border-radius: 20px;
+  }
+  .bd-opt.correct .bd-opt-tag { background: rgba(var(--ok-rgb),0.15); color: var(--correct); border: 1px solid rgba(var(--ok-rgb),0.3); }
+  .bd-opt.wrong   .bd-opt-tag { background: rgba(var(--bad-rgb),0.12);  color: var(--wrong);   border: 1px solid rgba(var(--bad-rgb),0.25); }
+
+  /* ── QUIZ SCREEN ── */
+  .quiz-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .progress-wrap { flex: 1; margin-right: 20px; }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 12px; font-weight: 500; color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 4px; background: var(--navy-surface);
+    border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* Timer */
+  .timer-display {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums;
+    color: var(--text);
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.16);
+    padding: 8px 14px; border-radius: 30px;
+    flex-shrink: 0; transition: color 0.3s, border-color 0.3s;
+    letter-spacing: 0;
+  }
+  .timer-display svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; transition: stroke 0.3s; }
+  .timer-display.warn { color: var(--wrong); border-color: rgba(var(--bad-rgb),0.35); }
+  .timer-display.warn svg { stroke: var(--wrong); }
+  .timer-max { font-size: 12px; font-weight: 400; color: var(--text-dim); letter-spacing: 0; }
+
+  /* Question card */
+  .q-card {
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 16px;
+    
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .q-num { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0; text-transform: none; margin-bottom: 12px; }
+  .q-text { font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif; font-size: 1.25rem; line-height: 1.45; color: var(--text); white-space: pre-line; }
+
+  /* Options */
+  .options { display: grid; gap: 10px; }
+  .opt {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--navy-card);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    font-size: 14px; font-weight: 400; color: var(--text); text-align: left;
+    width: 100%;
+  }
+  .opt:hover:not(:disabled) {
+    background: rgba(var(--ink-rgb),0.06);
+    border-color: rgba(var(--accent-rgb),0.3);
+    
+  }
+  .opt:disabled { cursor: default; transform: none; }
+  .opt-letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(var(--ink-rgb),0.10);
+    border: 1px solid rgba(var(--ink-rgb),0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--text-muted);
+    flex-shrink: 0;
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+  }
+  .opt.selected {
+    background: rgba(var(--accent-rgb),0.1);
+    border-color: rgba(var(--accent-rgb),0.45);
+  }
+  .opt.selected .opt-letter { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+  .opt.correct { background: rgba(var(--ok-rgb),0.12); border-color: rgba(var(--ok-rgb),0.4); }
+  .opt.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: #fff; }
+  .opt.wrong   { background: rgba(var(--bad-rgb),0.1);   border-color: rgba(var(--bad-rgb),0.35); }
+  .opt.wrong   .opt-letter { background: var(--wrong);   border-color: var(--wrong);   color: #fff; }
+
+  /* No Answer option — muted/neutral style */
+  .opt.no-answer-opt {
+    border-style: dashed;
+    border-color: rgba(var(--muted2-rgb),0.3);
+    color: var(--text-muted);
+  }
+  .opt.no-answer-opt .opt-letter {
+    background: rgba(var(--muted2-rgb),0.12);
+    border-color: rgba(var(--muted2-rgb),0.25);
+    color: var(--no-ans);
+  }
+  .opt.no-answer-opt:hover:not(:disabled) {
+    background: rgba(var(--muted2-rgb),0.08);
+    border-color: rgba(var(--muted2-rgb),0.45);
+  }
+  .opt.no-answer-opt.selected {
+    background: rgba(var(--muted2-rgb),0.1);
+    border-color: rgba(var(--muted2-rgb),0.45);
+  }
+  .opt.no-answer-opt.selected .opt-letter {
+    background: var(--no-ans);
+    border-color: var(--no-ans);
+    color: #fff;
+  }
+
+  .next-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+
+  /* ── RESULTS SCREEN ── */
+  .results-hero { text-align: center; padding: 10px 0 32px; }
+  .score-ring { position: relative; width: 140px; height: 140px; margin: 0 auto 28px; }
+  .score-ring svg { transform: rotate(-90deg); }
+  .score-ring-text {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .score-big { font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif; font-size: 2rem; color: var(--text); }
+  .score-sub { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+  .verdict {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0; text-transform: none;
+    padding: 8px 20px; border-radius: 30px; margin-bottom: 16px;
+  }
+  .verdict.pass { background: rgba(var(--ok-rgb),0.15); color: var(--correct); border: 1px solid rgba(var(--ok-rgb),0.35); }
+  .verdict.fail { background: rgba(var(--bad-rgb),0.12);  color: var(--wrong);   border: 1px solid rgba(var(--bad-rgb),0.3); }
+  .verdict svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .results-title {
+    font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif;
+    font-size: 1.75rem; margin-bottom: 10px;
+  }
+  .results-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+
+  .result-row {
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    display: flex; align-items: flex-start; gap: 14px;
+    text-align: left;
+  }
+  .r-icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .r-icon.c { background: rgba(var(--ok-rgb),0.15); color: var(--correct); }
+  .r-icon.w { background: rgba(var(--bad-rgb),0.12);  color: var(--wrong); }
+  .r-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .r-q { font-size: 13px; color: var(--text); line-height: 1.5; }
+  .r-ans { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+  .results-actions { display: flex; justify-content: center; gap: 12px; margin-top: 32px; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
+    font-size: 14px; font-weight: 500;
+    padding: 12px 24px;
+    border: 1px solid rgba(var(--ink-rgb),0.2); border-radius: var(--radius);
+    cursor: pointer;
+    transition: color var(--transition), border-color var(--transition);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(var(--ink-rgb),0.35); }
+  .btn-ghost svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+  /* ── QUIZ LAYOUT (sidebar + main) ── */
+  .quiz-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  /* ── LEFT SIDEBAR ── */
+  .q-sidebar {
+    width: 168px;
+    flex-shrink: 0;
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    border-radius: var(--radius);
+    padding: 16px;
+    position: sticky;
+    top: 24px;
+  }
+  .sidebar-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0;
+    text-transform: none; color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+
+  /* Bubble grid — 4 columns, fills top-to-bottom then left-to-right */
+  .bubble-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(13, 1fr);
+    grid-auto-flow: column;
+    gap: 5px;
+    margin-bottom: 14px;
+  }
+  .bubble {
+    width: 100%; aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    font-size: 10px; font-weight: 600;
+    background: var(--navy-card);
+    border: 1px solid rgba(var(--ink-rgb),0.16);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+  }
+  .bubble:hover {  border-color: rgba(var(--accent-rgb),0.3); color: var(--text-muted); }
+  .bubble.answered { background: rgba(var(--accent-rgb),0.18); border-color: rgba(var(--accent-rgb),0.4); color: var(--gold); }
+  .bubble.current  { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+
+  /* Legend */
+  .bubble-legend { display: flex; flex-direction: column; gap: 5px; margin-top: 14px; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 10px; color: var(--text-dim); }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+    background: var(--navy-card); border: 1px solid rgba(var(--ink-rgb),0.16);
+  }
+  .legend-dot.answered { background: rgba(var(--accent-rgb),0.18); border-color: rgba(var(--accent-rgb),0.4); }
+  .legend-dot.current  { background: var(--gold); border-color: var(--gold); }
+
+  .sidebar-divider { height: 1px; background: rgba(var(--ink-rgb),0.14); margin: 14px 0; }
+
+  /* Go-to widget */
+  .goto-label { font-size: 10px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--text-dim); margin-bottom: 8px; }
+  .goto-row { display: flex; gap: 5px; }
+  .goto-input {
+    flex: 1; min-width: 0;
+    background: var(--navy-card);
+    border: 1px solid rgba(var(--ink-rgb),0.18);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
+    font-size: 13px; font-weight: 500;
+    padding: 7px 8px;
+    text-align: center;
+    outline: none;
+    transition: border-color var(--transition);
+    -moz-appearance: textfield;
+  }
+  .goto-input::-webkit-outer-spin-button,
+  .goto-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .goto-input:focus { border-color: rgba(var(--accent-rgb),0.5); }
+  .goto-btn {
+    background: var(--gold-dim);
+    border: 1px solid rgba(var(--accent-rgb),0.3);
+    border-radius: var(--radius-sm);
+    color: var(--gold);
+    font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
+    font-size: 12px; font-weight: 600;
+    padding: 7px 10px;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+    white-space: nowrap;
+  }
+  .goto-btn:hover { background: rgba(var(--accent-rgb),0.25); border-color: rgba(var(--accent-rgb),0.5); }
+
+  /* Q-MAIN fills remaining space */
+  .q-main { flex: 1; min-width: 0; }
+
+  /* divider */
+  .divider { height: 1px; background: rgba(var(--ink-rgb),0.10); margin: 24px 0; }
+
+  /* ── CONFIRMATION SCREEN ── */
+  .confirm-wrap {
+    max-width: 520px;
+    margin: 60px auto 0;
+    text-align: center;
+  }
+  .confirm-icon {
+    width: 72px; height: 72px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(var(--accent-rgb),0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+  }
+  .confirm-icon svg { width: 32px; height: 32px; stroke: var(--gold); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .confirm-title {
+    font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .confirm-subtitle {
+    font-size: 15px; color: var(--text-muted);
+    line-height: 1.7; margin-bottom: 16px;
+  }
+  .confirm-stats {
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 40px;
+  }
+  .cstat {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500;
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    padding: 8px 16px; border-radius: 30px;
+    color: var(--text-muted);
+  }
+  .cstat-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .cstat-dot.answered { background: var(--gold); }
+  .cstat-dot.no-ans   { background: var(--no-ans); }
+  .confirm-actions {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  }
+
+  /* ── TAB SWITCH TOAST ── */
+  .tab-toast {
+    position: fixed;
+    top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px);
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--bad-rgb),0.5);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    z-index: 9999;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    min-width: 300px; max-width: 420px;
+    pointer-events: none;
+  }
+  .tab-toast.visible { transform: translateX(-50%) translateY(0); }
+  .tab-toast-icon {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(var(--bad-rgb),0.15);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tab-toast-icon svg { width: 16px; height: 16px; stroke: var(--wrong); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .tab-toast-body { flex: 1; }
+  .tab-toast-title { font-size: 13px; font-weight: 600; color: var(--wrong); margin-bottom: 2px; }
+  .tab-toast-msg   { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .tab-toast-count {
+    font-size: 11px; font-weight: 700;
+    background: rgba(var(--bad-rgb),0.15); color: var(--wrong);
+    border: 1px solid rgba(var(--bad-rgb),0.3);
+    padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* Tab switch result row */
+  .tab-result-row {
+    border-radius: var(--radius); padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+  }
+  .tab-result-row.flagged { background: rgba(var(--bad-rgb),0.07); border: 1px solid rgba(var(--bad-rgb),0.2); }
+  .tab-result-row.clean   { background: rgba(var(--ok-rgb),0.07); border: 1px solid rgba(var(--ok-rgb),0.2); }
+  .tab-result-icon {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tab-result-icon svg { width: 18px; height: 18px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tab-result-row.flagged .tab-result-icon { background: rgba(var(--bad-rgb),0.12); }
+  .tab-result-row.flagged .tab-result-icon svg { stroke: var(--wrong); }
+  .tab-result-row.clean   .tab-result-icon { background: rgba(var(--ok-rgb),0.12); }
+  .tab-result-row.clean   .tab-result-icon svg { stroke: var(--correct); }
+  .tab-result-label { font-size: 12px; color: var(--text-muted); }
+  .tab-result-val   { font-size: 14px; font-weight: 600; margin-top: 2px; }
+  .tab-result-row.flagged .tab-result-val { color: var(--wrong); }
+  .tab-result-row.clean   .tab-result-val { color: var(--correct); }
+
+  /* ── REVIEW SCREEN ── */
+  .review-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .review-counter {
+    font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none;
+    color: var(--wrong);
+    background: rgba(var(--bad-rgb),0.1);
+    border: 1px solid rgba(var(--bad-rgb),0.25);
+    padding: 5px 14px; border-radius: 20px;
+  }
+  .review-card {
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    border-radius: var(--radius);
+    padding: 28px; margin-bottom: 16px;
+  }
+  .review-qnum { font-size: 11px; font-weight: 600; color: var(--wrong); letter-spacing: 0; text-transform: none; margin-bottom: 12px; }
+  .review-qtext { white-space: pre-line; font-family: 'Fredoka', 'Nunito', ui-rounded, system-ui, sans-serif; font-size: 1.25rem; line-height: 1.45; color: var(--text); }
+
+  /* Review options — same base as .opt but non-interactive */
+  .review-opt {
+    display: flex; align-items: center; gap: 14px;
+    border-radius: var(--radius); padding: 14px 18px; margin-bottom: 10px;
+    font-size: 14px; font-weight: 400; text-align: left; width: 100%;
+    border: 1px solid rgba(var(--ink-rgb),0.14);
+    background: var(--navy-card); color: var(--text-muted);
+    cursor: default;
+  }
+  .review-opt .opt-letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(var(--ink-rgb),0.10); border: 1px solid rgba(var(--ink-rgb),0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--text-muted); flex-shrink: 0;
+  }
+  /* Correct answer */
+  .review-opt.is-correct {
+    background: rgba(var(--ok-rgb),0.1); border-color: rgba(var(--ok-rgb),0.4); color: var(--text);
+  }
+  .review-opt.is-correct .opt-letter { background: var(--correct); border-color: var(--correct); color: #fff; }
+  /* User's wrong answer */
+  .review-opt.is-wrong {
+    background: rgba(var(--bad-rgb),0.08); border-color: rgba(var(--bad-rgb),0.35); color: var(--text);
+  }
+  .review-opt.is-wrong .opt-letter { background: var(--wrong); border-color: var(--wrong); color: #fff; }
+  /* Labels on the right */
+  .review-opt-tag {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 10px; font-weight: 700; letter-spacing: 0; text-transform: none;
+    padding: 3px 9px; border-radius: 20px;
+  }
+  .is-correct .review-opt-tag { background: rgba(var(--ok-rgb),0.15); color: var(--correct); border: 1px solid rgba(var(--ok-rgb),0.3); }
+  .is-wrong   .review-opt-tag { background: rgba(var(--bad-rgb),0.12);  color: var(--wrong);   border: 1px solid rgba(var(--bad-rgb),0.25); }
+
+  .review-nav {
+    display: flex; align-items: center; justify-content: space-between; margin-top: 24px;
+  }
+  .review-dots { display: flex; gap: 6px; }
+  .review-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--navy-surface); border: 1px solid rgba(var(--ink-rgb),0.25);
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .review-dot.active { background: var(--wrong); border-color: var(--wrong); }
+  /* ── LIGHT MODE THEME: Parchment & Mahogany ── */
+    
+  /* ── THEME TOGGLE BUTTON ── */
+  .theme-toggle {
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--navy-surface);
+    border: 1px solid rgba(var(--ink-rgb),0.16);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+    flex-shrink: 0;
+  }
+  [data-theme="light"] .theme-toggle { border-color: rgba(var(--accent-rgb),0.2); }
+  .theme-toggle:hover { background: var(--navy-card); }
+  .theme-toggle svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .topbar-right { display: flex; align-items: center; gap: 8px; }
+
+  /* ── RESUME BANNER ── */
+  .resume-banner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px;
+    background: rgba(var(--accent-rgb),0.08);
+    border: 1px solid rgba(var(--accent-rgb),0.3);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .resume-banner-text { flex: 1; }
+  .resume-banner-title { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 3px; }
+  .resume-banner-sub   { font-size: 12px; color: var(--text-muted); }
+  .resume-banner-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .btn-resume {
+    font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif; font-size: 12px; font-weight: 600;
+    padding: 7px 14px; border-radius: var(--radius-sm); cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .btn-resume.primary {
+    background: var(--gold); color: var(--navy); border: none;
+  }
+  .btn-resume.primary:hover { background: var(--gold-light); }
+  .btn-resume.ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1px solid rgba(var(--ink-rgb),0.2);
+  }
+  .btn-resume.ghost:hover { border-color: rgba(var(--ink-rgb),0.35); color: var(--text); }
+  [data-theme="light"] .btn-resume.ghost { border-color: rgba(var(--accent-rgb),0.2); }
+
+  @media (max-width: 640px) {
+    .resume-banner { flex-direction: column; align-items: flex-start; }
+    .resume-banner-actions { width: 100%; }
+    .btn-resume { flex: 1; text-align: center; }
+  }
+
+  @media (max-width: 640px) {
+
+    body { padding: 12px; }
+
+    .topbar { margin-bottom: 18px; }
+    .brand-name { display: none; }
+
+    /* Start screen */
+    .start-hero { padding: 12px 0 24px; }
+    .start-hero h1 { font-size: 2rem; margin-bottom: 10px; }
+    .start-hero p  { font-size: 13px; margin-bottom: 24px; }
+    .meta-pills    { gap: 8px; margin-bottom: 28px; }
+    .pill          { font-size: 12px; padding: 6px 11px; }
+    .btn-primary   { width: 100%; justify-content: center; padding: 14px 20px; }
+    .history-section { margin-top: 24px; }
+    .history-row   { flex-wrap: wrap; gap: 6px; padding: 10px 12px; }
+
+    /* Quiz layout — hide sidebar, go single column */
+    .quiz-layout   { flex-direction: column; gap: 0; }
+    .q-sidebar     { display: none; }
+
+    /* Quiz header — stack timer below progress */
+    .quiz-header   { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 16px; }
+    .progress-wrap { margin-right: 0; }
+    .timer-display { justify-content: center; border-radius: var(--radius); }
+
+    /* Question card */
+    .q-card        { padding: 18px 16px; }
+    .q-text        { font-size: 1.05rem; }
+
+    /* Options */
+    .opt           { padding: 12px 14px; font-size: 13px; gap: 10px; }
+    .opt-letter    { width: 24px; height: 24px; font-size: 11px; flex-shrink: 0; }
+
+    /* Nav buttons */
+    .next-row      { gap: 10px; }
+    .next-row .btn-ghost,
+    .next-row .btn-primary { flex: 1; justify-content: center; padding: 12px 10px; font-size: 14px; }
+
+    /* Confirm screen */
+    .confirm-wrap  { margin-top: 30px; padding: 0 4px; }
+    .confirm-title { font-size: 1.6rem; }
+    .confirm-stats { gap: 8px; }
+    .cstat         { font-size: 12px; padding: 7px 12px; }
+    .confirm-actions { flex-direction: column; align-items: stretch; }
+    .confirm-actions .btn-ghost,
+    .confirm-actions .btn-primary { justify-content: center; width: 100%; }
+
+    /* Results */
+    .results-actions { flex-wrap: wrap; gap: 8px; }
+    .results-actions .btn-ghost,
+    .results-actions .btn-primary { flex: 1 1 calc(50% - 8px); justify-content: center; padding: 11px 8px; font-size: 13px; }
+
+    /* Breakdown */
+    .breakdown-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .breakdown-stats  { gap: 8px; }
+    .bstat            { min-width: 90px; padding: 12px; }
+    .bd-preview       { max-width: 120px; }
+
+    /* Review */
+    .review-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .review-nav    { gap: 8px; }
+    .review-nav .btn-ghost { padding: 10px 12px; font-size: 13px; }
+    .review-card   { padding: 18px 14px; }
+    .review-opt    { padding: 10px 12px; font-size: 13px; }
+
+    /* Modal */
+    .modal-box { padding: 24px 18px; }
+
+    /* Toast */
+    .tab-toast { min-width: unset; max-width: calc(100vw - 24px); left: 12px; right: 12px; transform: translateY(-120px); }
+    .tab-toast.visible { transform: translateY(0); }
+  }
+
+
+  /* ── warm refresh overrides ── */
+  .start-hero h1 { font-weight: 600; line-height: 1.12; }
+  .start-hero h1 em { font-style: normal; color: inherit; }
+  .brand-icon { display: none; }
+  .tag { background: none; border: none; padding: 0; font-size: 13px; font-weight: 600; color: var(--text-muted); }
+  .brand-name { font-size: 15px; font-weight: 700; color: var(--text); }
+  .btn-primary, .btn-ghost, .btn-resume, .btn-danger { border-radius: 999px; }
+  .q-card, .review-card { box-shadow: 0 1px 0 rgba(var(--ink-rgb),0.12); }
+  .q-text, .bd-qtext, .review-qtext { font-family: 'Nunito', ui-rounded, 'Hiragino Maru Gothic ProN', system-ui, sans-serif; font-weight: 500; font-size: clamp(1rem, 2.4vw, 1.12rem); line-height: 1.65; }
+  .opt, .review-opt { line-height: 1.5; }
+  .tab-toast { box-shadow: none; }
+  .tab-toast.visible { box-shadow: 0 8px 24px rgba(var(--ink-rgb),0.2); }
+  :focus-visible { outline: 3px solid rgba(var(--accent-rgb),0.55); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- TAB SWITCH TOAST -->
+<div class="tab-toast" id="tab-toast">
+  <div class="tab-toast-icon">
+    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  </div>
+  <div class="tab-toast-body">
+    <div class="tab-toast-title">Tab switch detected</div>
+    <div class="tab-toast-msg">Leaving the exam tab has been recorded.</div>
+  </div>
+  <div class="tab-toast-count" id="tab-toast-count">1 switch</div>
+</div>
+
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      </div>
+      <span class="brand-name">Practice Exam</span>
+    </div>
+    <div class="topbar-right">
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+        <svg id="theme-icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="theme-icon-sun"  viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <div class="tag">Regulation &amp; Ethics</div>
+    </div>
+  </div>
+
+  <!-- START SCREEN -->
+  <div id="screen-start" class="screen active">
+    <!-- RESUME BANNER (shown only when saved progress exists) -->
+    <div class="resume-banner" id="resume-banner" style="display:none">
+      <div class="resume-banner-text">
+        <div class="resume-banner-title">Unfinished exam found</div>
+        <div class="resume-banner-sub" id="resume-banner-sub">You left mid-way through. Pick up where you stopped?</div>
+      </div>
+      <div class="resume-banner-actions">
+        <button class="btn-resume ghost" onclick="discardAndStart()">Start fresh</button>
+        <button class="btn-resume primary" onclick="resumeQuiz()">Resume</button>
+      </div>
+    </div>
+    <div class="start-hero">
+      <h1><em>Regulation &amp; Ethics</em><br>Practice Exam</h1>
+      <p>Made by Dayyan</p>
+      <div class="meta-pills">
+        <div class="pill">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          60 min limit
+        </div>
+        <div class="pill">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span><span id="pill-count">50</span> questions</span>
+        </div>
+        <div class="pill">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Pass mark: 80%
+        </div>
+      </div>
+      <button class="btn-primary" onclick="startQuiz()">
+        Start
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <div id="history-section" class="history-section"></div>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="screen-quiz" class="screen">
+    <div class="quiz-layout">
+
+      <!-- LEFT SIDEBAR -->
+      <div class="q-sidebar">
+        <div class="sidebar-label">Questions</div>
+        <div class="bubble-grid" id="bubble-grid"></div>
+
+        <div class="sidebar-divider"></div>
+
+        <div class="goto-label">Jump to</div>
+        <div class="goto-row">
+          <input type="number" id="goto-input" class="goto-input" min="1" max="50" placeholder="No."
+            onkeydown="if(event.key==='Enter') goToQuestion()">
+          <button class="goto-btn" onclick="goToQuestion()">Go</button>
+        </div>
+
+        <div class="bubble-legend">
+          <div class="legend-item"><span class="legend-dot"></span>No Answer</div>
+          <div class="legend-item"><span class="legend-dot answered"></span>Answered</div>
+          <div class="legend-item"><span class="legend-dot current"></span>Current</div>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="q-main">
+        <div class="quiz-header">
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span id="q-label">Question 1 of 50</span>
+              <span id="q-of">50 questions</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:2%"></div></div>
+          </div>
+          <div class="timer-display" id="timer-display">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="timer-text">00:00</span>
+            <span class="timer-max">/ 60:00</span>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-num" id="q-num">Question 1</div>
+          <div class="q-text" id="q-text"></div>
+        </div>
+
+        <div class="options" id="options-grid"></div>
+
+        <div class="next-row" id="next-row">
+          <button class="btn-ghost" id="back-btn" onclick="prevQuestion()">
+            <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back
+          </button>
+          <button class="btn-primary" onclick="nextQuestion()">
+            <span id="next-label">Submit</span>
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONFIRMATION SCREEN -->
+  <div id="screen-confirm" class="screen">
+    <div class="confirm-wrap">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="confirm-title">Ready to submit?</div>
+      <div class="confirm-subtitle">
+        Take a moment to review your answers before seeing your result.<br>You can still go back and change any response.
+      </div>
+      <div class="confirm-stats" id="confirm-stats"></div>
+      <div class="confirm-actions">
+        <button class="btn-ghost" onclick="goBackToQuiz()">
+          <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Review answers
+        </button>
+        <button class="btn-primary" onclick="showResults()">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>See my result</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="screen-results" class="screen">
+    <div class="results-hero">
+      <div class="score-ring">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle fill="none" stroke="var(--navy-card)" stroke-width="8" cx="70" cy="70" r="58"/>
+          <circle id="score-arc" fill="none" stroke="var(--gold)" stroke-width="8"
+            stroke-linecap="round" cx="70" cy="70" r="58"
+            stroke-dasharray="364.4" stroke-dashoffset="364.4"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-big" id="score-big">0/50</div>
+          <div class="score-sub" id="score-pct">0%</div>
+        </div>
+      </div>
+      <div id="verdict-badge" class="verdict pass" style="display:none"></div>
+      <div class="results-title" id="results-title">Well done!</div>
+      <div class="results-subtitle" id="results-subtitle"></div>
+    </div>
+
+    <div class="divider"></div>
+    <div id="tab-switch-result"></div>
+
+    <div class="results-actions">
+      <button class="btn-ghost" onclick="startQuiz()">
+        <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Retry
+      </button>
+      <button class="btn-ghost" onclick="showTimeBreakdown()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Time breakdown
+      </button>
+      <button class="btn-ghost" id="review-btn" onclick="startReview()">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Review failed
+      </button>
+      <button class="btn-primary" onclick="goHome()">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- TIME BREAKDOWN SCREEN -->
+  <div id="screen-breakdown" class="screen">
+    <div class="breakdown-header">
+      <button class="btn-ghost" onclick="show('screen-results')">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to results
+      </button>
+      <div class="breakdown-title">Time Breakdown</div>
+      <div style="width:120px"></div>
+    </div>
+    <div class="breakdown-stats" id="breakdown-stats"></div>
+    <div class="breakdown-list" id="breakdown-list"></div>
+  </div>
+
+  <!-- REVIEW SCREEN -->
+  <div id="screen-review" class="screen">
+    <div class="review-header">
+      <button class="btn-ghost" onclick="show('screen-results')">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to results
+      </button>
+      <div class="review-counter" id="review-counter">1 / 1 failed</div>
+    </div>
+
+    <div class="review-card">
+      <div style="display:flex;align-items:center;margin-bottom:12px;"><div class="review-qnum" id="review-qnum" style="margin-bottom:0">Question 1</div><span class="time-badge" id="review-time-badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span id="review-time-val">—</span></span></div>
+      <div class="review-qtext" id="review-qtext"></div>
+    </div>
+
+    <div class="options" id="review-options"></div>
+
+    <div class="review-nav">
+      <button class="btn-ghost" id="review-prev" onclick="reviewPrev()">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Previous
+      </button>
+      <div class="review-dots" id="review-dots"></div>
+      <button class="btn-ghost" id="review-next" onclick="reviewNext()">
+        Next
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── REGULATION AND ETHICS QUESTION BANK (50 questions) ──
+// keepOrder: true → options are shown in their original order (no shuffle)
+const QUESTIONS = [
+  {"q": "Which of the following enforcement options do regulators make use of?\n\n(i) Criminal prosecution\n(ii) Curatorship to take over the business of the regulated firm\n(iii) Business rescue\n(iv) Civil actions and orders to compensate prejudiced consumers.", "opts": ["(i), (ii) and (iv) only", "(ii), (iii) and (iv) only", "(i), (ii) and (iii) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "Which one of the following objectives of financial regulation is achieved through market conduct regulation?", "opts": ["Protect financial customers and investors.", "Promote fairness, efficiency and transparency in the financial markets.", "Ensure the solvency and financial soundness of the country's financial institutions.", "Promote a stable financial system by monitoring, mitigating and managing systemic risk."], "correct": 0, "feedback": ""},
+  {"q": "It is important that the regulation of financial markets is drafted and enforced properly to ensure which of the following characteristics?\n\n(i) Efficiency\n(ii) Transparency\n(iii) Volatility\n(iv) Fairness", "opts": ["(i), (ii) and (iv) only", "(ii), (iii) and (iv) only", "(i), (ii) and (iii) only", "(i), (ii), (iii) and (iv)"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "Which of the following Acts is the Prudential Authority responsible for?", "opts": ["Pension Funds Act", "Insurance Act (Policyholder Rules)", "Co-operative Banks Act", "Credit Rating Services Act"], "correct": 2, "feedback": ""},
+  {"q": "Which of the following is included in the definition of a Financial Product?\n\n(i) A health service benefit provided by a medical scheme\n(ii) A credit agreement\n(iii) A benefit provided by a pension fund\n(iv) A participatory interest in a private business venture", "opts": ["(i), (ii) and (iv) only", "(ii), (iii) and (iv) only", "(i), (ii) and (iii) only", "(i), (ii), (iii) and (iv)"], "correct": 2, "feedback": "", "keepOrder": true},
+  {"q": "Which of the following is a financial service, as defined by the FSR Act?\n\n(i) Providing advice on a credit agreement\n(ii) Negotiating the sale of a second-hand motor vehicle on behalf of two persons\n(iii) Debt collection\n(iv) Buying and selling precious metals", "opts": ["(i) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "What is a SIFI?", "opts": ["Systemic Inclusion of Financial Institutions", "Systemically Important Financial Institution", "Stability Inspected Financial Institution", "Stability Important Financial Institution"], "correct": 1, "feedback": ""},
+  {"q": "Which of the following is an operational department of the Prudential Authority?", "opts": ["Conduct of Business Supervision Division", "Financial Conglomerate Supervision Department", "Market Integrity Division", "Regulatory Policy Department"], "correct": 1, "feedback": ""},
+  {"q": "The Financial Markets Act provides for which of the following?\n\n(i) Licensing and regulating exchanges\n(ii) Regulating and controlling trading, clearing and settlement\n(iii) Regulating listing requirements of the exchanges\n(iv) Enforcing clearing house rules", "opts": ["(i) and (ii) only", "(i), (ii) and (iii) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "A person providing an infrastructure for holding uncertificated securities is called", "opts": ["Authorised user", "Central securities depository", "Clearing house", "Issuer"], "correct": 1, "feedback": ""},
+  {"q": "Which of the following statements with regard to the role-players in terms of the Financial Markets Act are correct?\n\n(i) An authorised person is a person authorised to perform custody and administration services\n(ii) A market infrastructure includes a trade repository\n(iii) A participant participates in the activities of an exchange\n(iv) A trade repository maintains a centralised electronic database of transaction data", "opts": ["(i) and (iii) only", "(i) and (iv) only", "(ii) and (iii) only", "(ii) and (iv) only"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "Which of the following are securities as defined by the FMA?\n\n(i) Unlisted debentures issued by public state-owned enterprises.\n(ii) Unlisted bonds issued by private companies.\n(iii) Unlisted notes issued on an external exchange.\n(iv) Unlisted derivative instruments.", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(i) and (ii) only", "(ii), (iii) and (iv) only"], "correct": 1, "feedback": "See section 2.2.2.2.", "keepOrder": true},
+  {"q": "Which of the following functions are included in the definition of securities services in the Financial Markets Act?\n\n(i) Custody and administration of securities\n(ii) Management of securities and funds\n(iii) Clearing services\n(iv) Settlement services", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "In terms of the Financial Markets Act, clearing includes which of the following actions which take place before settlement?\n\n(i) Determine and calculate the exact number and nominal value of the securities of each kind to be transferred\n(ii) Determine and calculate the amount of money to be paid to ensure settlement of a transaction or group of transactions\n(iii) Determine and calculate the fees and levies to be charged in respect of the transaction\n(iv) The process by which the due performance of a transaction is underwritten from the time of trade to the time of settlement", "opts": ["(i), (ii) and (iii) only", "(i), (ii) and (iv) only", "(i) and (iii) only", "(ii), (iii) and (iv) only"], "correct": 1, "feedback": "", "keepOrder": true},
+  {"q": "Where there is any matter that may pose systemic risk, who must the FSCA inform?\n\n(i) The CEO of the relevant exchanges\n(ii) The Minister of Finance\n(iii) The Minister of Trade and Industry\n(iv) The Governor of the SARB", "opts": ["(i) and (ii) only", "(ii) and (iii) only", "(i) and (iv) only", "(ii) and (iv) only"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "The rules of an exchange must provide for which of the following in terms of authorized users?\n\n(i) Capital adequacy, guarantee and risk management requirements.\n(ii) The way in which the authorized user is required to conduct the securities services for which it is authorized\n(iii) The circumstances and way in which it may advertise or canvass for business\n(iv) The manner in which an authorized user who is acting as an interdealer broker is required to conduct its interdealer broking services", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "Which of the following statements is true regarding pledged listed securities?", "opts": ["An authorised user must furnish the FSCA with a daily provisional report when listed securities are pledged, indicating which securities are available for pledge at that time.", "An authorised user must issue a statement to its custody services provider that clearly specifies that only items appearing on the final report of pledged securities will be legally enforceable as having been pledged.", "An authorised user may only repledge listed securities with the written consent of the pledgor.", "An authorised user is permitted to borrow against pledged listed securities an amount in excess of the outstanding balance of any amount which the authorised user may have lent the pledgor against the pledged securities with the consent of the FSCA."], "correct": 2, "feedback": ""},
+  {"q": "When must an authorised user deposit cash received from a client into a designated trust account or account opened and maintained by an exchange for client funds?", "opts": ["Within 24 hours of receipt of the cash from the client.", "On the day of receipt of the cash from the client.", "By no later than 12H00 on the business day following the day of receipt of the cash from the client.", "By no later than 16:30 on the business day following the day of receipt of the cash from the client."], "correct": 1, "feedback": ""},
+  {"q": "Which of the following statements regarding nominees is correct?\n\n(i) A nominee of an authorised user must be approved as a nominee by the exchange in terms of exchange rules and comply with the requirements set out in the rules.\n(ii) A nominee of a participant must be approved as a nominee by the central securities depository in terms of depository rules and comply with the requirements set out in the rules.\n(iii) A nominee that is not approved as a nominee of an authorised user or a participant must be approved by the FSCA and comply with conduct standards determined by the FSCA.\n(iv) The Central Securities Depository must maintain a list of all nominees.", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "Public information for purposes of determining insider trading includes which of the following?\n\n(i) Information contained in records open for inspection by the public\n(ii) Information from information vendors\n(iii) Information that can be derived from public information\n(iv) Information that can easily be ascertained by professional traders", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "Inside information as defined in terms of the Financial Markets Act must comply with which of the following?\n\n(i) It must not yet be in the public domain\n(ii) If made public, it is likely to have a material effect on the price of a security\n(iii) It must relate generally to a security or the financial markets\n(iv) It must have been obtained or learned as an insider", "opts": ["(i), (ii) and (iii) only", "(i), (ii) and (iv) only", "(i) and (iii) only", "(ii), (iii) and (iv) only"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "When an insider who knows that he or she has inside information, deals directly for own account in the listed securities to which the information relates, which of the following defences may be raised?\n\n(i) He or she only became an insider after the instruction to deal was given and the instruction was not changed\n(ii) All the parties to the specific transaction had the same inside information\n(iii) Trading was limited to the parties to the specific transaction\n(iv) The transaction was not aimed at securing a benefit from exposure to price movement", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "A crypto asset is defined as-\n\n(i) A digital representation of value\n(ii) Not issued by a central bank (thus Central Bank Digital Currencies are excluded)\n(iii) Capable of being traded, transferred or stored electronically for payments, investments and other forms of utility\n(iv) Based on cryptographic techniques and distributed ledger technology.", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "What is the intention of the FSCA's declaration that crypto assets are to be included as a financial product in terms of FAIS?\n\n(i) To bring intermediaries that advise on or sell crypto assets to consumers within the FSCA's regulatory jurisdiction\n(ii) To legitimise and give credibility to crypto assets\n(iii) To immediately provide adequate protection (including risk disclosure) for consumers that are advised to purchase crypto assets.\n(iv) Improve the quality of data for policymakers and regulators about crypto assets", "opts": ["(i), (ii) and (iii) only", "(ii) and (iv) only", "(i), (iii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 2, "feedback": "", "keepOrder": true},
+  {"q": "Which of the following exchanges licenced in South Africa makes use of the T+0 settlement cycle", "opts": ["Cape Town Stock Exchange", "A2X", "EESE", "JSE"], "correct": 2, "feedback": ""},
+  {"q": "Which of the following exchanges make use of a pre-funded clearing model?\n\n(i) Cape Town Stock Exchange\n(ii) A2X\n(iii) EESE\n(iv) JSE", "opts": ["(i) and (ii) only", "(i) and (iii) only", "(ii) and (iii) only", "(ii) and (iv) only"], "correct": 1, "feedback": "", "keepOrder": true},
+  {"q": "In terms of the Financial Advisory and Intermediary Services (FAIS) Act, a key individual includes which of the following?\n\n(i) A natural person overseeing the rendering of a financial service at a financial services provider\n(ii) A corporate entity rendering financial services\n(iii) A natural person who is the only shareholder of a company that renders financial services\n(iv) A natural or corporate person who liaises with the Registrar on behalf of a financial services provider", "opts": ["(i) and (iii) only", "(i), (ii) and (iv) only", "(i), (iii) and (iv) only", "(ii), (iii) and (iv) only"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "Which ONE of the following financial services provider categories is authorised to render intermediary services of a discretionary nature in relation to a specific hedge fund?", "opts": ["Category I", "Category II", "Category IIA", "Category III"], "correct": 2, "feedback": ""},
+  {"q": "Which ONE of the following financial services provider categories is authorised to render intermediary services on a discretionary basis without bulking?", "opts": ["Category I", "Category II", "Category IIA", "Category III"], "correct": 1, "feedback": ""},
+  {"q": "In terms of the Financial Advisory and Intermediary Services (FAIS) Act, which of the following persons involved with a financial services provider must comply with the requirements of honesty and integrity?\n\n(i) A director\n(ii) A key individual\n(iii) An administrator\n(iv) A trustee", "opts": ["(i) and (iii) only", "(i), (ii) and (iv) only", "(i), (iii) and (iv) only", "(ii), (iii) and (iv) only"], "correct": 1, "feedback": "", "keepOrder": true},
+  {"q": "Which of the following factors are prima facie indications that a person is lacking honesty and integrity as required by the Financial Advisory and Intermediary Services (FAIS) Act?\n\n(i) A person who had a licence issued by a regulatory body revoked due to serious incompetence\n(ii) A person who was found guilty of fraud within ten years prior to an application for approval\n(iii) A person who was denied membership by a statutory professional body for mismanagement\n(iv) A person who was found guilty in criminal proceedings relating to a charge of causing grievous bodily harm", "opts": ["(i) and (iii) only", "(i), (ii) and (iv) only", "(i), (iii) and (iv) only", "(ii), (iii) and (iv) only"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "An FSP must prove continuous operational ability, which includes which of the following?\n\n(i) A fixed business address from where business is conducted\n(ii) Adequate communication facilities, including a full-time telephone or cell phone service\n(iii) Typing and document duplication facilities\n(iv) Adequate storage and filing systems", "opts": ["(i) and (iv) only", "(ii) and (iv) only", "(ii), (iii) and (iv) only", "(i), (ii), (iii) and (iv) only"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "An FSP must prove continuous operational ability, which includes which of the following?\n\n(i) At least one nominee company registered in its name\n(ii) A bank account (and trust account for client moneys if applicable)\n(iii) Appropriate money laundering control systems\n(iv) A detailed service level agreement where third parties provide administrative or system functions", "opts": ["(i) and (iv) only", "(ii) and (iv) only", "(ii), (iii) and (iv) only", "(i), (ii), (iii) and (iv) only"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "What amount of liquid assets must be maintained by a Category IV FSP?", "opts": ["4/52 weeks of annual expenditure", "8/52 weeks expenditure", "13/25 weeks expenditure", "15/52 weeks expenditure"], "correct": 1, "feedback": ""},
+  {"q": "The assets (excluding goodwill and other intangible assets) of a hedge fund financial services provider must exceed liabilities by at least --", "opts": ["R1 million", "R3 million", "R5 million", "R10 million"], "correct": 1, "feedback": ""},
+  {"q": "Immaterial financial interest for purposes of determining a conflict of interest in terms of the Financial Advisory and Intermediary Services (FAIS) Act include which ONE of the following?", "opts": ["Travel or accommodation associated with permitted training", "Corporate branded gifts during the festive season", "Financial interest not exceeding R1000 in any calendar year", "Ownership interest not exceeding R1000 in any calendar year"], "correct": 2, "feedback": ""},
+  {"q": "In terms of the Financial Advisory and Intermediary Services (FAIS) Act, a conflicts of interest policy must include which of the following aspects?\n\n(i) A list of all the financial services provider's associates\n(ii) The names of third parties in which the financial services provider holds ownership interests\n(iii) The names of third parties that hold ownership interests in the financial services provider\n(iv) The nature and extent of the ownership interest concerned", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "Which steps must a financial services provider take to ensure that advice provided by a financial services provider is suitable to the needs of a client?\n\n(i) Contact an information vendor to gather appropriate market information\n(ii) Seek appropriate information with regard to the client's financial situation\n(iii) Conduct an analysis based on information obtained\n(iv) Identify the financial product appropriate to the client's risk profile", "opts": ["(i) and (ii) only", "(i), (ii) and (iv) only", "(i), (iii) and (iv) only", "(ii), (iii) and (iv) only"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "Where an FSP receives funds without the mediation of a bank, it must issue a receipt and deposit such funds into a separate bank account. By when should this be done?", "opts": ["Immediately", "Within one business day of receipt of the funds", "Within two business days of receipt of the funds", "As soon as practicable but not longer than three business days"], "correct": 1, "feedback": ""},
+  {"q": "When documents of title are lodged with a FSP, it must issue a written confirmation of receipt identifying the documents. By when should this be done?", "opts": ["Immediately", "Within one business day of receipt of the funds", "Within two business days of receipt of the funds", "As soon as practicable but not longer than three business days"], "correct": 0, "feedback": ""},
+  {"q": "Which of the following statements regarding a waiver of rights is correct?", "opts": ["A client may only waive their rights provided a contract is in place with their FSP.", "A client must sign a waiver of rights for those services which the FSP is not licenced to conduct.", "Any waiver of rights by a client must be approved by the FSCA.", "Any waiver of rights by a client is null and void."], "correct": 3, "feedback": ""},
+  {"q": "Which of the following statements with regard to advertisement by financial services providers are correct?\n\n(i) Forecasts must disclose the basic assumptions on which they are based\n(ii) Guarantees should be prominently displayed\n(iii) Ranking must include a reference to its source and date\n(iv) A warning with regard to the risk of buying and selling a financial product must be included.", "opts": ["(i), (ii) and (iii) only", "(i), (ii) and (iv) only", "(i), (iii) and (iv) only", "(ii), (iii) and (iv) only"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "Which of the following statements regarding the mandate that a Discretionary FSP (DFSP) must obtain from a client is correct?", "opts": ["The mandate must include the bank account details of the DFSP's trust account", "The mandate can be terminated on written notice not exceeding 30 calendar days.", "The mandate must include a statement to acknowledge that the DFSP may only exercise voting rights on the client's behalf under circumstances where the client is unable to make their voting choice known.", "The DFSP should not conduct a needs analysis for a client before obtaining a signed or electronic mandate."], "correct": 0, "feedback": ""},
+  {"q": "A condition in which a portfolio has a greater nominal exposure to short positions than long positions in any asset class or in aggregate across the portfolio is a:", "opts": ["Net short position", "Short position", "Gross short position", "Shorted position"], "correct": 0, "feedback": ""},
+  {"q": "In addition to the duties imposed by the FAIS Act, the FFSP must maintain a record of advice furnished to the client reflecting the basis on which advice was given, more particularly which of the following?\n\n(i) A brief summary of the information and material on which the advice was based.\n(ii) The financial products considered.\n(iii) A description of the particular forex investment that was recommended and an explanation of why a forex investment is likely to satisfy the client's identified needs and objectives.\n(iv) The investment of each client must be recorded individually.", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "Which of the following statements regarding the principle of independence as contained in the Code of Ethics are correct?\n\n(i) Professional independence is the ability to act, and to be seen to act, with integrity and objectivity\n(ii) Independence is fundamental to the relationship of trust between the financial market participant, the client and the public\n(iii) A financial market participant must continually exercise good judgment to achieve and maintain such independence and objectivity\n(iv) A financial market participant may not claim that he or she is independent or impartial if he or she is not", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 0, "feedback": "", "keepOrder": true},
+  {"q": "The practice where a financial market participant places personal orders in advance of client or institutional orders, with the foreknowledge that a movement in price may occur from a large trade is known as --", "opts": ["Front running", "Churning", "Poor execution", "Twisting"], "correct": 0, "feedback": ""},
+  {"q": "In terms of the Code of Ethics a financial market participant shall not make statements which misrepresent which of the following aspects?\n\n(i) The services that the financial market participant is capable of performing for the clients\n(ii) The qualifications of the financial market participant\n(iii) The investment performance that the financial market participant has accomplished or can reasonably be expected to achieve for his or her clients\n(iv) The expected performance of any investment", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "In terms of the Code of Ethics a financial market practitioner must ensure the suitability of an investment by taking which of the following aspects into account?\n\n(i) The needs and circumstances of the client\n(ii) The basic characteristics of the investment involved\n(iii) The basic characteristics of the total portfolio\n(iv) The potential risks of loss involved.", "opts": ["(i), (ii) and (iii) only", "(i), (iii) and (iv) only", "(ii) and (iv) only", "(i), (ii), (iii) and (iv)"], "correct": 3, "feedback": "", "keepOrder": true},
+  {"q": "The practice of shifting profits and losses between portfolios with the aim of reporting unrealistic profits to a client by a financial market practitioner is known as --", "opts": ["Twisting", "Churning", "Poor execution", "Front running"], "correct": 0, "feedback": ""}
+];
+
+// Flat bank, shuffled each attempt. If the bank ever grows past EXAM_SIZE,
+// each attempt draws a random sample of that size.
+const EXAM_SIZE = 50;
+const ALL_QUESTIONS = QUESTIONS;   // used by save/resume (index lookups)
+
+// Index 4 = "No Answer" — the default selection for every question
+const NO_ANSWER_IDX = 4;
+
+// activeQuestions holds the shuffled order for each attempt
+let activeQuestions = pickFromBank();
+
+const MAX_SECONDS = 3600;
+let current = 0, timer = null, elapsed = 0, timerBase = 0, lastSaveAt = 0;
+// All questions start with "No Answer" (index 4) selected by default
+let answers = new Array(activeQuestions.length).fill(NO_ANSWER_IDX);
+const SCORE_CIRC = 364.4;
+
+// ── TAB / WINDOW SWITCH DETECTION ──
+let tabSwitchCount  = 0;
+let toastTimer      = null;
+let trackingActive  = false;
+let awayFromExam    = false;  // true once the student has left
+let switchDebounce  = null;   // consolidates blur + visibilitychange firing together
+
+function showSwitchToast() {
+  const countEl = document.getElementById('tab-toast-count');
+  countEl.textContent = tabSwitchCount === 1 ? '1 switch' : `${tabSwitchCount} switches`;
+  const toast = document.getElementById('tab-toast');
+  toast.classList.add('visible');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('visible'), 4000);
+}
+
+function handleLeave() {
+  if (!trackingActive || awayFromExam) return;
+  // Debounce: if blur + visibilitychange both fire within 100ms, only count once
+  clearTimeout(switchDebounce);
+  switchDebounce = setTimeout(() => {
+    awayFromExam = true;
+    tabSwitchCount++;
+    saveProgress();
+  }, 100);
+}
+
+function handleReturn() {
+  if (!trackingActive) return;
+  clearTimeout(switchDebounce); // cancel pending leave if they returned very quickly
+  if (awayFromExam) {
+    awayFromExam = false;
+    showSwitchToast();
+  }
+}
+
+// Browser tab switch (another tab in the same browser window)
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { handleLeave(); } else { handleReturn(); }
+});
+
+// App / window switch (Word, Excel, another browser window, etc.)
+// blur fires when the browser window loses OS focus
+window.addEventListener('blur',  () => { if (!document.hidden) handleLeave();  });
+window.addEventListener('focus', () => { if (!document.hidden) handleReturn(); });
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function goHome() { clearInterval(timer); clearProgress(); trackingActive = false; awayFromExam = false; clearTimeout(switchDebounce); checkResumeBanner(); show('screen-start'); }
+
+function startQuiz() {
+  activeQuestions = pickFromBank();
+  current = 0;
+  answers     = new Array(activeQuestions.length).fill(NO_ANSWER_IDX);
+  timePerQ    = new Array(activeQuestions.length).fill(0);
+  shuffleMaps = activeQuestions.map(q => q.keepOrder ? [0,1,2,3] : shuffle([0,1,2,3]));
+  elapsed = 0;
+  qStartTime = 0;
+  tabSwitchCount = 0;
+  awayFromExam   = false;
+  clearTimeout(switchDebounce);
+  trackingActive = true;
+  show('screen-quiz');
+  buildBubbles();
+  startTimer();
+  renderQuestion();
+}
+
+function buildBubbles() {
+  const grid = document.getElementById('bubble-grid');
+  grid.style.gridTemplateRows = `repeat(${Math.ceil(activeQuestions.length / 4)}, 1fr)`;
+  document.getElementById('goto-input').max = activeQuestions.length;
+  grid.innerHTML = '';
+  activeQuestions.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.textContent = i + 1;
+    b.className = 'bubble';
+    b.onclick = () => { recordTimeOnQuestion(); current = i; renderQuestion(); saveProgress(); };
+    b.id = `bubble-${i}`;
+    grid.appendChild(b);
+  });
+}
+
+function updateBubbles() {
+  activeQuestions.forEach((_, i) => {
+    const b = document.getElementById(`bubble-${i}`);
+    if (!b) return;
+    // "answered" only when the user explicitly picked A–D (not No Answer)
+    const hasRealAnswer = answers[i] !== NO_ANSWER_IDX;
+    b.className = 'bubble' +
+      (i === current      ? ' current'  :
+       hasRealAnswer      ? ' answered' : '');
+  });
+}
+
+function startTimer() {
+  clearInterval(timer);
+  timerBase = Date.now() - elapsed * 1000;
+  lastSaveAt = elapsed;
+  updateTimer();
+  timer = setInterval(() => {
+    elapsed = Math.floor((Date.now() - timerBase) / 1000);
+    updateTimer();
+    if (elapsed - lastSaveAt >= 30) { lastSaveAt = elapsed; saveProgress(); }
+    if (elapsed >= MAX_SECONDS) { clearInterval(timer); showResults(); }
+  }, 1000);
+}
+
+function updateTimer() {
+  const m = Math.floor(elapsed / 60);
+  const s = elapsed % 60;
+  document.getElementById('timer-text').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  const display = document.getElementById('timer-display');
+  display.classList.toggle('warn', elapsed >= MAX_SECONDS - 300);
+}
+
+function renderQuestion() {
+  const q = activeQuestions[current];
+  document.getElementById('q-label').textContent = `Question ${current+1} of ${activeQuestions.length}`;
+  document.getElementById('q-of').textContent = `${activeQuestions.length} questions`;
+  document.getElementById('q-num').textContent = `Question ${current+1}`;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('progress-fill').style.width = `${((current+1)/activeQuestions.length)*100}%`;
+
+  const labels = ['A','B','C','D','E'];
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+
+  // Render A–D options in shuffled display order
+  const map = shuffleMaps[current] || [0,1,2,3];
+  map.forEach((origIdx, displayPos) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt' + (answers[current] === origIdx ? ' selected' : '');
+    btn.innerHTML = `<span class="opt-letter">${labels[displayPos]}</span>${esc(q.opts[origIdx])}`;
+    btn.onclick = () => selectOption(origIdx);
+    grid.appendChild(btn);
+  });
+
+  // Render the 5th option: "No Answer" — always present, selected by default
+  const noAnsBtn = document.createElement('button');
+  noAnsBtn.className = 'opt no-answer-opt' + (answers[current] === NO_ANSWER_IDX ? ' selected' : '');
+  noAnsBtn.innerHTML = `<span class="opt-letter">E</span>No Answer`;
+  noAnsBtn.onclick = () => selectOption(NO_ANSWER_IDX);
+  grid.appendChild(noAnsBtn);
+
+  document.getElementById('next-label').textContent = 'Submit';
+  // Hide Back on first question
+  document.getElementById('back-btn').style.visibility = current === 0 ? 'hidden' : 'visible';
+
+  updateBubbles();
+}
+
+function selectOption(origIdx) {
+  answers[current] = origIdx;
+  const map = shuffleMaps[current] || [0,1,2,3];
+  const allOpts = document.querySelectorAll('#options-grid .opt');
+  allOpts.forEach((btn, displayPos) => {
+    if (displayPos < map.length) {
+      btn.classList.toggle('selected', map[displayPos] === origIdx);
+    } else {
+      btn.classList.toggle('selected', origIdx === NO_ANSWER_IDX);
+    }
+  });
+  updateBubbles();
+  saveProgress();
+}
+
+function prevQuestion() {
+  if (current === 0) return;
+  recordTimeOnQuestion();
+  current--;
+  renderQuestion();
+  saveProgress();
+}
+
+function nextQuestion() {
+  if (current === activeQuestions.length - 1) {
+    recordTimeOnQuestion();
+    showConfirm();
+    return;
+  }
+  recordTimeOnQuestion();
+  current++;
+  renderQuestion();
+  saveProgress();
+}
+
+function showConfirm() {
+  clearInterval(timer);
+  // Tally answered vs no-answer
+  const answered  = answers.filter(a => a !== NO_ANSWER_IDX).length;
+  const noAnsCount = answers.filter(a => a === NO_ANSWER_IDX).length;
+  const statsEl = document.getElementById('confirm-stats');
+  statsEl.innerHTML = `
+    <div class="cstat"><span class="cstat-dot answered"></span>${answered} of ${activeQuestions.length} answered</div>
+    <div class="cstat"><span class="cstat-dot no-ans"></span>${noAnsCount} left as No Answer</div>
+  `;
+  show('screen-confirm');
+}
+
+function goBackToQuiz() {
+  // Resume timer from where it left off
+  qStartTime = elapsed;
+  startTimer();
+  show('screen-quiz');
+  renderQuestion();
+}
+
+// ── REVIEW MODE ──
+let reviewQueue = [];   // indices of failed questions
+let reviewIdx   = 0;   // current position in reviewQueue
+
+// ── SHUFFLE (feature 3) ──
+let shuffleMaps = [];
+
+
+function pickFromBank() {
+  return shuffle(QUESTIONS).slice(0, EXAM_SIZE);
+}
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ── TIME PER QUESTION (feature 7) ──
+let timePerQ   = [];
+let qStartTime = 0;
+
+function recordTimeOnQuestion() {
+  if (!timePerQ.length) return;
+  timePerQ[current] += elapsed - qStartTime;
+  qStartTime = elapsed;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtTime(s) {
+  if (s < 60) return s + 's';
+  return Math.floor(s / 60) + 'm ' + (s % 60) + 's';
+}
+
+function startReview() {
+  // Build queue of failed questions (wrong answer OR no answer)
+  reviewQueue = activeQuestions
+    .map((q, i) => i)
+    .filter(i => answers[i] !== activeQuestions[i].correct);
+
+  if (reviewQueue.length === 0) return; // shouldn't happen but guard anyway
+  reviewIdx = 0;
+  buildReviewDots();
+  renderReview();
+  show('screen-review');
+}
+
+function buildReviewDots() {
+  const dots = document.getElementById('review-dots');
+  // Cap dots at 20 to avoid overflow on many failures
+  if (reviewQueue.length <= 20) {
+    dots.innerHTML = reviewQueue.map((_, i) =>
+      `<div class="review-dot${i === 0 ? ' active' : ''}" id="rdot-${i}"></div>`
+    ).join('');
+  } else {
+    dots.innerHTML = '';
+  }
+}
+
+function updateReviewDots() {
+  reviewQueue.forEach((_, i) => {
+    const d = document.getElementById(`rdot-${i}`);
+    if (d) d.className = 'review-dot' + (i === reviewIdx ? ' active' : '');
+  });
+}
+
+function renderReview() {
+  const qi      = reviewQueue[reviewIdx];
+  const q       = activeQuestions[qi];
+  const userAns = answers[qi];
+  const labels  = ['A','B','C','D','E'];
+
+  document.getElementById('review-qnum').textContent  = `Question ${qi + 1}`;
+  document.getElementById('review-qtext').textContent = q.q;
+  const tv = document.getElementById('review-time-val');
+  if (tv) tv.textContent = timePerQ[qi] > 0 ? fmtTime(timePerQ[qi]) : '—';
+  document.getElementById('review-counter').textContent =
+    `${reviewIdx + 1} / ${reviewQueue.length} failed`;
+
+  // Build options (A–D + No Answer)
+  const allOpts = [...q.opts, 'No Answer'];
+  const container = document.getElementById('review-options');
+  container.innerHTML = '';
+
+  allOpts.forEach((label, i) => {
+    const isNoAns   = i === NO_ANSWER_IDX;
+    const isCorrect = i === q.correct;
+    const isChosen  = i === userAns;
+
+    // Skip neutral options (not the correct one, not what the user chose)
+    if (!isCorrect && !isChosen) return;
+
+    const div = document.createElement('div');
+    let cls = 'review-opt';
+    let tag = '';
+
+    if (isCorrect && isChosen) {
+      // Shouldn't appear in review (they got it right) but guard anyway
+      cls += ' is-correct';
+      tag = '<span class="review-opt-tag">Correct</span>';
+    } else if (isCorrect) {
+      cls += ' is-correct';
+      tag = '<span class="review-opt-tag">Correct answer</span>';
+    } else if (isChosen) {
+      cls += ' is-wrong';
+      tag = '<span class="review-opt-tag">Your answer</span>';
+    }
+
+    if (isNoAns) cls += ' no-answer-opt';
+
+    div.className = cls;
+    div.innerHTML = `<span class="opt-letter">${labels[i === NO_ANSWER_IDX ? 4 : (shuffleMaps[qi] || [0,1,2,3]).indexOf(i)]}</span>${esc(label)}${tag}`;
+    container.appendChild(div);
+  });
+
+  // Prev / Next button visibility
+  document.getElementById('review-prev').style.visibility = reviewIdx === 0 ? 'hidden' : 'visible';
+  document.getElementById('review-next').style.visibility = reviewIdx === reviewQueue.length - 1 ? 'hidden' : 'visible';
+
+  updateReviewDots();
+}
+
+function reviewPrev() {
+  if (reviewIdx > 0) { reviewIdx--; renderReview(); }
+}
+function reviewNext() {
+  if (reviewIdx < reviewQueue.length - 1) { reviewIdx++; renderReview(); }
+}
+
+function goToQuestion() {
+  const input = document.getElementById('goto-input');
+  const n = parseInt(input.value, 10);
+  if (!n || n < 1 || n > activeQuestions.length) {
+    input.style.borderColor = 'rgba(224,85,85,0.6)';
+    setTimeout(() => input.style.borderColor = '', 800);
+    return;
+  }
+  input.value = '';
+  recordTimeOnQuestion();
+  current = n - 1;
+  renderQuestion();
+  saveProgress();
+}
+
+function showResults() {
+  recordTimeOnQuestion();
+  clearInterval(timer);
+  clearProgress();
+  trackingActive = false;
+  document.getElementById('tab-toast').classList.remove('visible');
+  show('screen-results');
+
+  // Show/hide review button depending on whether there are failures
+  const reviewBtn = document.getElementById('review-btn');
+  const failCount = answers.filter((a, i) => a !== activeQuestions[i].correct).length;
+  reviewBtn.style.display = failCount > 0 ? 'inline-flex' : 'none';
+  const tabEl = document.getElementById('tab-switch-result');
+  if (tabSwitchCount === 0) {
+    tabEl.innerHTML = `
+      <div class="tab-result-row clean">
+        <div class="tab-result-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="tab-result-label">Tab switch detection</div>
+          <div class="tab-result-val">No tab switches — clean attempt</div>
+        </div>
+      </div>`;
+  } else {
+    tabEl.innerHTML = `
+      <div class="tab-result-row flagged">
+        <div class="tab-result-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div>
+          <div class="tab-result-label">Tab switch detection</div>
+          <div class="tab-result-val">${tabSwitchCount} tab switch${tabSwitchCount > 1 ? 'es' : ''} recorded during this exam</div>
+        </div>
+      </div>`;
+  }
+
+  // "No Answer" counts as wrong (same as any incorrect answer)
+  const score   = answers.filter((a, i) => a === activeQuestions[i].correct).length;
+  const rawPct  = Math.round((score / activeQuestions.length) * 100);
+  const penalty = tabSwitchCount * 2;
+  const finalPct = Math.max(0, rawPct - penalty);
+
+  document.getElementById('score-big').textContent = `${score}/${activeQuestions.length}`;
+  document.getElementById('score-pct').textContent = `${finalPct}%`;
+
+  const PASS_MARK = 0.80;
+  const passed = (finalPct / 100) >= PASS_MARK;
+
+  const badge = document.getElementById('verdict-badge');
+  badge.style.display = 'inline-flex';
+  badge.className = 'verdict ' + (passed ? 'pass' : 'fail');
+  badge.innerHTML = passed
+    ? `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Passed`
+    : `<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Failed`;
+
+  document.getElementById('results-title').textContent = passed ? 'Well done!' : 'Better luck next time.';
+  if (penalty > 0) {
+    document.getElementById('results-subtitle').textContent =
+      `Raw score: ${rawPct}%, Tab penalty: −${penalty}% (${tabSwitchCount} switch${tabSwitchCount > 1 ? 'es' : ''}), Final: ${finalPct}%`;
+  } else {
+    document.getElementById('results-subtitle').textContent = passed
+      ? `You scored ${finalPct}% — above the 80% pass mark.`
+      : `You scored ${finalPct}% — the pass mark is 80%. Give it another try.`;
+  }
+
+  setTimeout(() => {
+    const arc = document.getElementById('score-arc');
+    arc.style.transition = 'stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1)';
+    arc.style.strokeDashoffset = SCORE_CIRC - (finalPct / 100) * SCORE_CIRC;
+    arc.style.stroke = finalPct >= 80 ? 'var(--correct)' : finalPct >= 50 ? 'var(--gold)' : 'var(--wrong)';
+  }, 100);
+
+  // Save attempt to history
+  try {
+    const hist = JSON.parse(localStorage.getItem('reExamHistory') || '[]');
+    hist.unshift({ date: new Date().toISOString(), score, total: activeQuestions.length, elapsed, passed, tabs: tabSwitchCount, rawPct, penalty, finalPct });
+    localStorage.setItem('reExamHistory', JSON.stringify(hist.slice(0, 10)));
+    renderHistory();
+  } catch(e) {}
+}
+
+// ── ATTEMPT HISTORY (feature 6) ──
+function renderHistory() {
+  const el = document.getElementById('history-section');
+  if (!el) return;
+  try {
+    const hist = JSON.parse(localStorage.getItem('reExamHistory') || '[]');
+    if (hist.length === 0) {
+      el.innerHTML = '';
+      return;
+    }
+    const rows = hist.map((h, idx) => {
+      const d    = new Date(h.date);
+      const date = d.toLocaleDateString('en-ZA', { day: '2-digit', month: 'short', year: '2-digit' });
+      const time = d.toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit' });
+      const pct  = h.finalPct !== undefined ? h.finalPct : Math.round((h.score / h.total) * 100);
+      const dur  = fmtTime(h.elapsed);
+      const tabs = (h.tabs === undefined || h.tabs === 0)
+        ? `<span class="history-tab-clean">✓ Clean</span>`
+        : `<span class="history-tab-flagged">${h.tabs} switch${h.tabs > 1 ? 'es' : ''}</span>`;
+      const penaltyTag = (h.penalty && h.penalty > 0)
+        ? `<span class="history-penalty">−${h.penalty}%</span>`
+        : '';
+      return `<div class="history-row">
+        <span class="history-num">#${idx + 1}</span>
+        <span class="history-date">${date} ${time}</span>
+        <span class="history-score">${h.score} / ${h.total}</span>
+        <span class="history-time">⏱ ${dur}</span>
+        ${tabs}
+        ${penaltyTag}
+        <span class="history-pct ${h.passed ? 'pass' : 'fail'}">${pct}% — ${h.passed ? 'Pass' : 'Fail'}</span>
+      </div>`;
+    }).join('');
+    el.innerHTML =
+      '<div class="history-heading">Past Attempts</div>' + rows +
+      '<div style="text-align:center;margin-top:14px;">' +
+      '<span class="clear-history-link" onclick="promptClearHistory()">Clear history</span>' +
+      '</div>';
+  } catch(e) { el.innerHTML = ''; }
+}
+
+// ── CLEAR HISTORY WITH PASSWORD ──
+const HISTORY_HASH = 'aa1be933fec0f68c7d1ef42b15259b73f88c582d5f535753d9ad647394deefe8';
+
+function promptClearHistory() {
+  document.getElementById('clear-modal').classList.add('active');
+  document.getElementById('clear-pw-input').value = '';
+  document.getElementById('clear-pw-error').style.display = 'none';
+  setTimeout(() => document.getElementById('clear-pw-input').focus(), 50);
+}
+
+function closeClearModal() {
+  document.getElementById('clear-modal').classList.remove('active');
+}
+
+async function confirmClearHistory() {
+  const val = document.getElementById('clear-pw-input').value;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+  const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  if (hash === HISTORY_HASH) {
+    localStorage.removeItem('reExamHistory');
+    closeClearModal();
+    renderHistory();
+  } else {
+    const err = document.getElementById('clear-pw-error');
+    err.style.display = 'block';
+    document.getElementById('clear-pw-input').value = '';
+    document.getElementById('clear-pw-input').focus();
+  }
+}
+
+renderHistory();
+
+// ── TIME BREAKDOWN (new feature) ──
+function showTimeBreakdown() {
+  show('screen-breakdown');
+
+  const labels = ['A','B','C','D','E'];
+  const total  = timePerQ.reduce((s, t) => s + t, 0);
+  const avg    = activeQuestions.length ? Math.round(total / activeQuestions.length) : 0;
+  const maxT   = Math.max(...timePerQ);
+  const slowestIdx = timePerQ.indexOf(maxT);
+
+  // Summary stats
+  document.getElementById('breakdown-stats').innerHTML = `
+    <div class="bstat"><div class="bstat-val">${fmtTime(total)}</div><div class="bstat-lbl">Total time</div></div>
+    <div class="bstat"><div class="bstat-val">${fmtTime(avg)}</div><div class="bstat-lbl">Avg per question</div></div>
+    <div class="bstat"><div class="bstat-val">${maxT > 0 ? 'Q' + (slowestIdx + 1) : '—'}</div><div class="bstat-lbl">Slowest question</div></div>
+  `;
+
+  // Question rows
+  const list = document.getElementById('breakdown-list');
+  list.innerHTML = '';
+
+  activeQuestions.forEach((q, i) => {
+    const userAns   = answers[i];
+    const correct   = userAns === q.correct;
+    const noAns     = userAns === NO_ANSWER_IDX;
+    const dotCls    = correct ? 'correct' : noAns ? 'no-ans' : 'wrong';
+    const timeStr   = timePerQ[i] > 0 ? fmtTime(timePerQ[i]) : '—';
+    // Truncate question text to ~60 chars for preview
+    const preview   = q.q.replace(/\n/g, ' ').substring(0, 72) + (q.q.length > 72 ? '…' : '');
+
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.id = 'bdrow-' + i;
+
+    // Build answer options — show all 4, highlight correct + user's choice
+    const map = shuffleMaps[i] || [0,1,2,3];
+    const optsHtml = map.map((origIdx, displayPos) => {
+      const isCorrect = origIdx === q.correct;
+      const isChosen  = origIdx === userAns;
+      let cls = 'bd-opt neutral';
+      let tag = '';
+      if (isCorrect && isChosen) {
+        cls = 'bd-opt correct';
+        tag = '<span class="bd-opt-tag">Correct</span>';
+      } else if (isCorrect) {
+        cls = 'bd-opt correct';
+        tag = '<span class="bd-opt-tag">Correct answer</span>';
+      } else if (isChosen) {
+        cls = 'bd-opt wrong';
+        tag = '<span class="bd-opt-tag">Your answer</span>';
+      }
+      return `<div class="${cls}"><span class="opt-letter">${labels[displayPos]}</span>${esc(q.opts[origIdx])}${tag}</div>`;
+    }).join('');
+
+    // No Answer row if chosen
+    const noAnsHtml = noAns
+      ? `<div class="bd-opt wrong"><span class="opt-letter">E</span>No Answer<span class="bd-opt-tag">Your answer</span></div>`
+      : '';
+
+    row.innerHTML = `
+      <div class="bd-summary" onclick="toggleBreakdownRow(${i})">
+        <span class="bd-qnum">Q${i + 1}</span>
+        <span class="bd-preview">${esc(preview)}</span>
+        <span class="bd-time">${timeStr}</span>
+        <span class="bd-dot ${dotCls}"></span>
+        <svg class="bd-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="bd-detail">
+        <div class="bd-qtext">${esc(q.q)}</div>
+        <div class="bd-opts">${optsHtml}${noAnsHtml}</div>
+      </div>`;
+
+    list.appendChild(row);
+  });
+}
+
+function toggleBreakdownRow(i) {
+  const row = document.getElementById('bdrow-' + i);
+  if (row) row.classList.toggle('open');
+}
+
+// ── AUTO-SAVE PROGRESS ──
+const PROGRESS_KEY = 'reExamProgress';
+
+function saveProgress() {
+  if (!trackingActive) return;
+  try {
+    const questionOrder = activeQuestions.map(q => ALL_QUESTIONS.indexOf(q));
+    const state = {
+      questionOrder,
+      answers: [...answers],
+      current,
+      elapsed,
+      shuffleMaps: shuffleMaps.map(m => [...m]),
+      tabSwitchCount,
+      timePerQ: timePerQ.map((v, i) => i === current ? v + (elapsed - qStartTime) : v),
+      savedAt: Date.now()
+    };
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(state));
+  } catch(e) {}
+}
+
+function clearProgress() {
+  try { localStorage.removeItem(PROGRESS_KEY); } catch(e) {}
+}
+
+function loadSavedProgress() {
+  try {
+    const raw = localStorage.getItem(PROGRESS_KEY);
+    if (!raw) return null;
+    const state = JSON.parse(raw);
+    // Discard saves older than 24 hours
+    if (Date.now() - state.savedAt > 86400000) { clearProgress(); return null; }
+    return state;
+  } catch(e) { return null; }
+}
+
+function checkResumeBanner() {
+  const state = loadSavedProgress();
+  const banner = document.getElementById('resume-banner');
+  if (!banner) return;
+  if (!state) { banner.style.display = 'none'; return; }
+  const answered = state.answers.filter(a => a !== NO_ANSWER_IDX).length;
+  const total    = state.questionOrder.length;
+  const mins     = Math.floor(state.elapsed / 60);
+  const secs     = state.elapsed % 60;
+  const timeStr  = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+  document.getElementById('resume-banner-sub').textContent =
+    `Q${state.current + 1} of ${total}, ${answered} answered, ${timeStr} elapsed`;
+  banner.style.display = 'flex';
+}
+
+function resumeQuiz() {
+  const state = loadSavedProgress();
+  if (!state) { startQuiz(); return; }
+  try {
+    activeQuestions = state.questionOrder.map(i => ALL_QUESTIONS[i]);
+    answers      = state.answers;
+    current      = state.current;
+    elapsed = Math.min(MAX_SECONDS, state.elapsed + Math.max(0, Math.floor((Date.now() - state.savedAt) / 1000)));  // time away still counts
+    shuffleMaps  = state.shuffleMaps;
+    tabSwitchCount = (state.tabSwitchCount || 0) + 1;  // leaving/reloading mid-exam counts as one switch
+    timePerQ = (state.timePerQ && state.timePerQ.length === activeQuestions.length) ? state.timePerQ : new Array(activeQuestions.length).fill(0);
+    qStartTime   = elapsed;
+    awayFromExam   = false;
+    clearTimeout(switchDebounce);
+    trackingActive = true;
+    show('screen-quiz');
+    buildBubbles();
+    startTimer();
+    renderQuestion();
+  } catch(e) { startQuiz(); }
+}
+
+function discardAndStart() {
+  clearProgress();
+  document.getElementById('resume-banner').style.display = 'none';
+  startQuiz();
+}
+
+// ── DARK / LIGHT MODE TOGGLE ──
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const moon = document.getElementById('theme-icon-moon');
+  const sun  = document.getElementById('theme-icon-sun');
+  if (theme === 'light') {
+    moon.style.display = 'none';
+    sun.style.display  = 'block';
+  } else {
+    moon.style.display = 'block';
+    sun.style.display  = 'none';
+  }
+  try { localStorage.setItem('reTheme', theme); } catch(e) {}
+}
+
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+}
+
+// ── INIT ON LOAD ──
+(function init() {
+  // Restore theme preference — default is light (Parchment & Mahogany)
+  try {
+    const saved = localStorage.getItem('reTheme') || 'light';
+    applyTheme(saved);
+  } catch(e) { applyTheme('light'); }
+  document.getElementById('pill-count').textContent = Math.min(EXAM_SIZE, QUESTIONS.length);
+  // Show resume banner if a session was saved
+  checkResumeBanner();
+})();
+
+</script>
+<!-- CLEAR HISTORY MODAL -->
+<div class="modal-overlay" id="clear-modal" onclick="if(event.target===this) closeClearModal()">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <div class="modal-title">Enter Password</div>
+    <div class="modal-subtitle">This action will permanently delete all attempt history on this device.</div>
+    <input type="password" id="clear-pw-input" class="modal-input" placeholder="••••••••"
+      onkeydown="if(event.key==='Enter') confirmClearHistory()">
+    <div class="modal-error" id="clear-pw-error">Incorrect password. Try again.</div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeClearModal()">Cancel</button>
+      <button class="btn-danger" onclick="confirmClearHistory()">Clear</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
